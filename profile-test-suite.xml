@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Profile Website Test Suite" parallel="methods" thread-count="2" verbose="2">
+    
+    <parameter name="browser" value="chrome"/>
+    <parameter name="headless" value="false"/>
+    <parameter name="environment" value="profile"/>
+    
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+    
+    <test name="Profile Website Smoke Tests" preserve-order="true">
+        <parameter name="cucumber.filter.tags" value="@smoke and @profile"/>
+        <classes>
+            <class name="dev.marvinmarzon.runners.CucumberTestNGRunner"/>
+        </classes>
+    </test>
+    
+    <test name="Profile Website Content Tests" preserve-order="true">
+        <parameter name="cucumber.filter.tags" value="@content and @profile"/>
+        <classes>
+            <class name="dev.marvinmarzon.runners.CucumberTestNGRunner"/>
+        </classes>
+    </test>
+    
+    <test name="Profile Website Functionality Tests" preserve-order="true">
+        <parameter name="cucumber.filter.tags" value="@functionality and @profile"/>
+        <classes>
+            <class name="dev.marvinmarzon.runners.CucumberTestNGRunner"/>
+        </classes>
+    </test>
+    
+    <test name="Profile Website Responsive Tests" preserve-order="true">
+        <parameter name="cucumber.filter.tags" value="@responsive and @profile"/>
+        <classes>
+            <class name="dev.marvinmarzon.runners.CucumberTestNGRunner"/>
+        </classes>
+    </test>
+    
+</suite>
