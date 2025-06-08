@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Disable Apache HttpClient wire logging to reduce noise -->
+    <logger name="org.apache.hc.client5.http.wire" level="OFF"/>
+    <logger name="org.apache.http.wire" level="OFF"/>
+    <logger name="httpclient.wire" level="OFF"/>
+    
+    <!-- Set reasonable logging levels -->
+    <logger name="dev.marvinmarzon" level="INFO"/>
+    <logger name="io.cucumber" level="INFO"/>
+    <logger name="org.testng" level="WARN"/>
+    <logger name="io.github.bonigarcia.wdm" level="WARN"/>
+    
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+    
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -- %msg%n</pattern>
+        </encoder>
+    </appender>
+</configuration>

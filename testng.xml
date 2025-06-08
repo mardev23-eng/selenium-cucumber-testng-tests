@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Enterprise Cucumber TestNG Suite" parallel="methods" thread-count="4" verbose="2">
+    
+    <parameter name="browser" value="chrome"/>
+    <parameter name="headless" value="false"/>
+    <parameter name="environment" value="local"/>
+    
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+    </listeners>
+    
+    <test name="Cucumber BDD Tests" preserve-order="true">
+        <classes>
+            <class name="dev.marvinmarzon.runners.CucumberTestNGRunner"/>
+        </classes>
+    </test>
+    
+</suite>

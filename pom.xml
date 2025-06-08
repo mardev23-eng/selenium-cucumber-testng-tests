@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.marvinmarzon</groupId>
+    <artifactId>enterprise-cucumber-testng</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Enterprise Cucumber-TestNG Framework</name>
+    <description>Enterprise-grade test automation framework with Selenium, Cucumber, and TestNG</description>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Dependency Versions -->
+        <selenium.version>4.15.0</selenium.version>
+        <cucumber.version>7.14.0</cucumber.version>
+        <webdrivermanager.version>5.6.2</webdrivermanager.version>
+        <testng.version>7.8.0</testng.version>
+        <slf4j.version>2.0.9</slf4j.version>
+        <logback.version>1.4.11</logback.version>
+        <allure.version>2.24.0</allure.version>
+        <maven.surefire.version>3.2.2</maven.surefire.version>
+        <maven.failsafe.version>3.2.2</maven.failsafe.version>
+        
+        <!-- Test Execution Properties -->
+        <test.browser>chrome</test.browser>
+        <test.headless>false</test.headless>
+        <test.environment>local</test.environment>
+        <test.thread.count>1</test.thread.count>
+        <test.suite.file>testng.xml</test.suite.file>
+    </properties>
+
+    <dependencies>
+        <!-- Selenium WebDriver -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- WebDriverManager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+        <!-- Cucumber -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-picocontainer</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+
+        <!-- TestNG -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <!-- Allure Reporting -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-cucumber7-jvm</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+
+        <!-- Utilities -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.13.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Compiler Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Clean Plugin with retry configuration -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <retryOnError>true</retryOnError>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
+
+            <!-- Surefire Plugin for Unit Tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <!-- Failsafe Plugin for Integration Tests (Cucumber-TestNG) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven.failsafe.version}</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${test.suite.file}</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <systemPropertyVariables>
+                        <test.browser>${test.browser}</test.browser>
+                        <test.headless>${test.headless}</test.headless>
+                        <test.environment>${test.environment}</test.environment>
+                        <test.thread.count>${test.thread.count}</test.thread.count>
+                    </systemPropertyVariables>
+                    <properties>
+                        <property>
+                            <name>parallel</name>
+                            <value>methods</value>
+                        </property>
+                        <property>
+                            <name>threadcount</name>
+                            <value>${test.thread.count}</value>
+                        </property>
+                    </properties>
+                    <!-- Ensure proper cleanup -->
+                    <shutdown>kill</shutdown>
+                    <forkedProcessTimeoutInSeconds>300</forkedProcessTimeoutInSeconds>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Allure Plugin -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>2.12.0</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Environment Profiles -->
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <test.environment>local</test.environment>
+                <test.headless>false</test.headless>
+                <test.thread.count>1</test.thread.count>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev</id>
+            <properties>
+                <test.environment>dev</test.environment>
+                <test.headless>true</test.headless>
+                <test.thread.count>2</test.thread.count>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>staging</id>
+            <properties>
+                <test.environment>staging</test.environment>
+                <test.headless>true</test.headless>
+                <test.thread.count>4</test.thread.count>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>prod</id>
+            <properties>
+                <test.environment>prod</test.environment>
+                <test.headless>true</test.headless>
+                <test.thread.count>6</test.thread.count>
+            </properties>
+        </profile>
+
+        <!-- Browser Profiles -->
+        <profile>
+            <id>chrome</id>
+            <properties>
+                <test.browser>chrome</test.browser>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>firefox</id>
+            <properties>
+                <test.browser>firefox</test.browser>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>edge</id>
+            <properties>
+                <test.browser>edge</test.browser>
+            </properties>
+        </profile>
+
+        <!-- Execution Mode Profiles -->
+        <profile>
+            <id>headed</id>
+            <properties>
+                <test.headless>false</test.headless>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>headless</id>
+            <properties>
+                <test.headless>true</test.headless>
+            </properties>
+        </profile>
+
+        <!-- Tag-based execution profiles -->
+        <profile>
+            <id>smoke</id>
+            <properties>
+                <test.cucumber.tags>@smoke</test.cucumber.tags>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>regression</id>
+            <properties>
+                <test.cucumber.tags>@regression</test.cucumber.tags>
+            </properties>
+        </profile>
+    </profiles>
+</project>
