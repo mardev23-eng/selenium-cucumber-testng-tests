@@ -1,6 +1,6 @@
-# Enterprise Test Automation Framework
+# Test Automation Framework
 
-A comprehensive, enterprise-grade test automation framework built with Selenium WebDriver, Cucumber BDD, and TestNG.
+A comprehensive, test automation framework built with Selenium WebDriver, Cucumber BDD, and TestNG.
 
 ## Features
 
@@ -11,7 +11,7 @@ A comprehensive, enterprise-grade test automation framework built with Selenium 
 - **Remote Execution**: Selenium Grid support
 - **Comprehensive Reporting**: Allure reports with screenshots and videos
 - **Configuration Management**: Environment-specific configurations
-- **Enterprise Logging**: Structured logging with SLF4J and Logback
+- **Logging**: Structured logging with SLF4J and Logback
 
 ## Quick Start
 
@@ -143,7 +143,7 @@ src/
     └── testConfig-prod.properties
 ```
 
-## Key Enterprise Features
+## Key Features
 
 ### 1. Thread-Safe Driver Management
 - ThreadLocal WebDriver instances
